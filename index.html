@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Expert 결과물 갤러리</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#f5f6f8; --surface:#fff; --ink:#14181f; --muted:#5d6675; --line:#e3e6eb;
+  --accent:#1a4fd6; --accent-soft:#e8eefc; --chip:#eef0f3; --shadow:0 1px 2px rgba(20,24,31,.06),0 8px 24px rgba(20,24,31,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1218; --surface:#181c24; --ink:#eef1f6; --muted:#9aa3b2; --line:#2a303b;
+  --accent:#7aa2ff; --accent-soft:#1d2a4a; --chip:#232833; --shadow:0 1px 2px rgba(0,0,0,.4);
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+header{padding:56px 0 28px}
+.eyebrow{font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.02em}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.2;margin:8px 0 10px;letter-spacing:-.02em}
+.lead{color:var(--muted);margin:0;font-size:16px}
+.stats{display:flex;gap:20px;margin-top:20px;color:var(--muted);font-size:14px;flex-wrap:wrap}
+.stats b{color:var(--ink);font-size:18px;margin-right:4px}
+.toolbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:24px}
+.toolbar .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search{flex:1 1 240px;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:15px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:0;background:var(--chip);color:var(--ink);padding:8px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;padding-bottom:64px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .15s,box-shadow .15s;text-align:left;font:inherit;color:inherit;padding:0}
+.card:hover,.card:focus-visible{transform:translateY(-2px);box-shadow:var(--shadow);outline:none}
+.thumb{aspect-ratio:4/3;background:#fff;border-bottom:1px solid var(--line);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meta{display:flex;gap:6px;flex-wrap:wrap;font-size:12px}
+.tag{background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:6px;font-weight:600}
+.tag.dept{background:var(--chip);color:var(--muted);font-weight:500}
+.card h2{font-size:17px;margin:0;line-height:1.35;letter-spacing:-.01em}
+.card p{margin:0;color:var(--muted);font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.who{margin-top:auto;padding-top:6px;font-size:14px;font-weight:600}
+.empty{color:var(--muted);padding:40px 0;text-align:center;grid-column:1/-1}
+dialog{border:0;padding:0;width:min(1100px,100vw);max-width:100vw;height:min(92vh,900px);max-height:100vh;border-radius:16px;background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(10,12,16,.6)}
+.dlg{display:flex;flex-direction:column;height:100%}
+.dlg-head{padding:18px 20px 0;display:flex;gap:12px;align-items:flex-start}
+.dlg-head h3{margin:0;font-size:20px;line-height:1.3}
+.dlg-head .sub{color:var(--muted);font-size:14px;margin-top:4px}
+.close{margin-left:auto;border:0;background:var(--chip);color:var(--ink);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;flex:none}
+.tabs{display:flex;gap:4px;padding:14px 20px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{border:0;background:none;color:var(--muted);font:inherit;font-size:15px;padding:10px 14px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--ink);font-weight:600}
+.tab-spacer{flex:1}
+.open-link{align-self:center;font-size:13px;color:var(--accent);text-decoration:none;white-space:nowrap;padding:0 4px}
+.frame{flex:1;background:var(--bg)}
+.frame iframe{width:100%;height:100%;border:0;display:block}
+footer{color:var(--muted);font-size:13px;padding:0 0 40px}
+@media (max-width:640px){
+  header{padding:36px 0 20px}
+  .wrap{padding:0 16px}
+  dialog{height:100vh;border-radius:0}
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="eyebrow">삼성생명 AI Expert 과정 · 1주차 개인 과제</div>
+  <h1>AI Agent 결과물 갤러리</h1>
+  <p class="lead">수강생들이 직접 기획하고 만든 업무 AI 에이전트를 모았습니다. 카드를 누르면 팜플렛, 발표자료, 시연영상을 바로 볼 수 있어요.</p>
+  <div class="stats"><span><b id="cnt"></b>개 결과물</span><span><b id="ppl"></b>명 참여</span><span><b>2026.10.16</b>제출</span></div>
+</header>
+
+<div class="toolbar"><div class="wrap">
+  <input class="search" id="q" type="search" placeholder="이름, 부서, 프로젝트명으로 검색" aria-label="검색">
+  <div class="chips" id="chips" role="group" aria-label="조 필터"></div>
+</div></div>
+
+<main class="wrap"><div class="grid" id="grid"></div></main>
+
+<footer class="wrap">교육용 가상 데이터로 만든 PoC 결과물입니다. 자료는 Google Drive에서 제공됩니다.</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg">
+    <div class="dlg-head">
+      <div><h3 id="dlgTitle"></h3><div class="sub" id="dlgSub"></div></div>
+      <button class="close" id="close" aria-label="닫기">×</button>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="frame" id="frame"></div>
+  </div>
+</dialog>
+
+<script>
+const DATA = [{"n": 1, "name": "박봉세", "dept": "법무팀", "team": "", "title": "법무 뉴스레터 Agent", "summary": "국회·금융당국·법원 공개 출처의 법무 이슈를 모아 원문 근거 초안, 인쇄본, 배포 메일까지 만들어 주는 사내 법무 뉴스레터 에이전트", "ids": {"pamphlet": "1lvUjsfIBfnNmRyNeChSSEZMpJG-5iis_", "slides": "1s3XzlCDrB4omXAsrvJ5bU2fNeS7ps9HU", "video": "1Ov8fJM0gaDIpv5dVLFIE5thtNMIg07Ng"}}, {"n": 2, "name": "신태헌", "dept": "전략영업본부", "team": "4조", "title": "AI 보험컨설팅: 집 한 채로 시작하는 재무 진단", "summary": "FC가 상담 전에 고객의 상속세·재무 상황을 계산하고 보고서를 받아 보는 FC 전용 상담 준비 에이전트", "ids": {"slides": "16MZwJ_l4y6Ix9tsUfv1DPcGZUr5AYJ-o", "pamphlet": "1gxyOsE0BgLtqkaGyHQf9AHHXnePnycAr", "video": "1V_xZcdVhFSxhBkbPi17gNTQX3TIzBlb2"}}, {"n": 3, "name": "안성호", "dept": "전략영업본부", "team": "4조", "title": "세일즈 멘토", "summary": "첫 상담 전에 근거를 먼저 준비하는 FC용 AI 멘토. 시세와 상속세는 코드가 계산해 한 장짜리 보고서로 정리", "ids": {"video": "1Wf_QCOgXCioFB-o02LB-9m_CcInUEXH7", "pamphlet": "1ufclUofN3BI7BX4O15EpmHLY2EndnOJo", "slides": "1KFLkhARDrR5S3LycakVfOwkmPTnVFpN4"}}, {"n": 4, "name": "임근진", "dept": "컴플라이언스팀", "team": "2조", "title": "일상감시 대상 판정·규정 적합성 검토 Agent", "summary": "사규를 근거로 일상감시 대상 여부를 판정하고, 불명확한 건은 보류로 돌리는 규정 검토 에이전트", "ids": {"pamphlet": "1tSMXZ6QQIH9tWy8jxcoppYY-BxmPxWKo", "video": "1hdCpQsKBHbVl0Xr5Z5lF_4WuHKYW_T9p", "slides": "13yYQPlRkl4pLI99lx9bkQe8E_TWStQDU"}}, {"n": 5, "name": "최종진", "dept": "경영지원 AX", "team": "", "title": "보험업 IR 대시보드", "summary": "흩어진 리포트·실적·시장 정보를 한 화면에 모으고, 멀티에이전트가 근거를 교차 확인해 데일리 브리핑을 작성", "ids": {"pamphlet": "1bWlDqO9BhoS3YIGsLZZ0aZz1GfUYVDvu", "video": "1wH--7FCnArF5mYvcHC5cDUbaXIoFNQSL", "slides": "1371vI_1SyqieG-7NwEzZlJXWOOO-mGe_"}}, {"n": 6, "name": "김귀정", "dept": "기획 AX", "team": "4조", "title": "FC 첫 상담 길잡이 AI Agent", "summary": "주소와 메모만 넣으면 상속·연금 상담 준비부터 FC 내부용 보고서까지 만들어 주는 멀티에이전트", "ids": {"video": "11N7K5ux2AFlEOZF7OTZbeWYTi7Fx8BA-", "slides": "15ArWR_vNm1YB41x3Hd8XxXxzuVe2PwjM", "pamphlet": "11BrrT-JCdmfTOpqHT765TibJeXW_h336"}}, {"n": 7, "name": "김혜린", "dept": "소비자보호 AX", "team": "3조", "title": "INSIGHT HUB", "summary": "숙련 조사역의 민원 처리 노하우를 기록해 신임 조사역에게 이어 주는 노하우 계승 에이전트", "ids": {"video": "186zorDVe5RoYbmuYTGO6r2xF86_cmdgD", "pamphlet": "1iZJxdB1P2PMlbBobs5ARCbtTIfN2WMqB", "slides": "1ADD9yVjsddkxTHO6xYe0cU0HUSsFofe9"}}, {"n": 8, "name": "신다미", "dept": "인사 AX", "team": "2조", "title": "Talent Insight", "summary": "지원자 서류를 여러 관점에서 검토해 모든 면접위원이 같은 근거로 평가하도록 돕는 채용 검토 에이전트", "ids": {"pamphlet": "1mLQDDRvkXZ2ljMBPalJraLECrwqZoEVM", "video": "1o8igpLchG6gby_PjwErNAc0ZC17Quc2n", "slides": "1zwwMOPJt884ZdGiyA8bNKL8DgZRjH6hl"}}, {"n": 9, "name": "홍정인", "dept": "플랫폼 AX", "team": "4조", "title": "실거래가·부양가족별 상속세 추정 에이전트", "summary": "주소와 가족 구성만 넣으면 법령 분야별 근거가 붙은 상속 상담 메모를 작성", "ids": {"slides": "1qF2XO7YqbH7Stat-q4q5SC2NfOzKZS3p", "video": "1IVZn15fVqaf5NcYZujgVeOBa60O9l5GW", "pamphlet": "1NJoGcHiejAfdYJcBQsP_P3ykLx5QZThI"}}, {"n": 10, "name": "김은주, 김동준", "dept": "재무심사AX", "team": "1조", "title": "퇴직연금 RM 고객 상담지원 플랫폼", "summary": "고객 분석 에이전트와 법령 근거 챗봇을 연결해 DC/IRP 상담 준비부터 제안서 초안까지 자동화", "ids": {"pamphlet": "17NgLHAsCEjY0TuUZZXd5NGlW3W1IRUoU", "video": "1xvuyZqGQ5tJn2NQHIHBUFmCmzyuhvF9R", "slides": "1J3Ac0J_xMg1Jfco02D5Ciwr_zexr-NLI"}}, {"n": 11, "name": "홍태희, 김유미, 임예종", "dept": "재무심사AX", "team": "1조", "title": "Asset Intelligence 자산운용 멀티에이전트", "summary": "시장 신호를 보유 자산·부채 영향과 연결하고, 대응안 비교부터 임원 보고까지 이어 주는 3개 에이전트", "ids": {"video": "1Y7u7_CxiEOE40KxZae096KJ3DNMrywk1", "slides": "16ZxKlHTtgXG3JYWzuUe_7o2QJOU-Qo1y", "pamphlet": "183BZ8SynfW7rJKeuhJbb8iChmdNAVX5U"}}, {"n": 12, "name": "박진경", "dept": "경영지원AX", "team": "", "title": "경영공시 보고서 자동화 AI Agent", "summary": "직전 공시 PPT를 넣으면 두 에이전트가 표·숫자와 주석·변동요인을 작성해 검토본 PPT를 만드는 재경팀 멀티에이전트", "ids": {"slides": "1zDR8eei5A3FmyzOcLSx0t51BpJPy1YRT", "video": "1O8x0b1XYtl0mrSyQcCc0iqmCyV6odbvQ", "pamphlet": "1xR1Kl8PIlvNnvWHLVk7SADyMSoCJIvX-"}}, {"n": 13, "name": "양승희", "dept": "경영지원AX", "team": "", "title": "AI 경영회의 리허설 멀티에이전트", "summary": "재경·위험관리·대외설명·기획·법무 다섯 관점이 공시와 법령 원문을 읽고 안건의 쟁점을 한 장으로 정리", "ids": {"slides": "18QSr8AoUUzyK0TcTEaBCLJYwZ8mo1lW2", "pamphlet": "10KqfnRV9YLbU0GkHDUCu5uqjP7kuGUOT", "video": "1-wLEX93q9HCTdr4MPOW_izzxmE7BOiI2"}}, {"n": 14, "name": "정우진", "dept": "기획AX", "team": "", "title": "제갈량 멀티에이전트 (exec-review)", "summary": "AI 참모 15명과 의장이 결재 안건을 토론해 근거 번호가 달린 1~2쪽 경영진 의견서로 정리", "ids": {"slides": "1xmtt23XSoPStuUuBcKm1dlgzDbFKzYtC", "video": "1eElIe4tvZxcH2yOSXBkzD4cT-yw3nljr", "pamphlet": "125F1tDo4T7RQSyvPd6qZWGIWkk8LOCIc"}}, {"n": 15, "name": "김지선", "dept": "신계약AX", "team": "", "title": "신계약 세금우대 도우미 Agent", "summary": "세법 원문과 사내 매뉴얼(이지스)을 근거로 세금우대 가능 여부를 판단하고, 안 되면 가능한 방법까지 안내", "ids": {"slides": "150TzH1ypFNWl4VC7TykN30gH1KNl0LkM", "video": "1pTq6507bpo9JiYw0WCqzVgiDs5JDRw_v", "pamphlet": "10LFutV3hnqf3K9RFhaLmEZ53gdIEWhjQ"}}, {"n": 16, "name": "홍수향", "dept": "신계약AX", "team": "2조", "title": "질병별 심사기준 정합성 검토", "summary": "심사 룰·지급률·위험도와 대외 정보를 종합해 인수기준을 다시 세울 질병을 찾고 변경 초안까지 작성", "ids": {"slides": "1R2Xch5lhvZm29rujRenii6Z2MbZoIg8v", "pamphlet": "16hd_OuEdwBZCk12UuPzsxSLMBTR31LTu", "video": "1aEc6PEzBnhvPJErFEjHxHOFA8r3mIFo1"}}, {"n": 17, "name": "조수연", "dept": "CSM전략팀", "team": "3조", "title": "보유계약 현장 질문 통합 응대 에이전트", "summary": "질문 한 곳에서 에이전트·이지스·매뉴얼 순으로 근거를 찾아 답하고, 답이 없으면 담당자를 바로 연결", "ids": {"video": "10QsIplThaGM1b0DaMMkICpsbR7T3hMBD", "pamphlet": "1hd19HTz1Hn4cOyVM2plMHnHdIcMELV41", "slides": "1FmWmjsOiDPUuCxXYhuWVqIYXfT4mgHbO"}}, {"n": 18, "name": "백선홍", "dept": "CSM전략팀 AX", "team": "", "title": "Sambleau (삼블로)", "summary": "자연어 요청만으로 해지 일보 대시보드를 만들고 조직·일자·상품별 이상 징후를 자동으로 찾는 셀프서비스 BI", "ids": {"slides": "1hbEUnytPxfxb-dMEJ5R21Hg7BmzH-4Mv", "pamphlet": "1Ur5FOw0EqzNl3P5uem2Fa2iPQ4tGuqdG", "video": "1sI-v1uFtF6oUYJ_1I3OKJOL-qnqShr2L"}}, {"n": 19, "name": "유선종", "dept": "FC AX", "team": "4조", "title": "FC브리프", "summary": "상속세 계산과 보험 셀링포인트를 담은 상담 브리프 한 장을 고객 미팅 전에 만들어 주는 에이전트", "ids": {"pamphlet": "1oXNLDJJ3_m0xLmic9KCeS-82kq6tGout", "slides": "1uyFHcTU69LuQNPDahI9hQe8-afbnsVk1", "video": "1kOuK9wLEqIKggJlesYQwWLk50syAs15U"}}, {"n": 20, "name": "정미란", "dept": "고객전략P", "team": "3조", "title": "관심고객 현장응대 AI Agent", "summary": "당일 리스트와 QnA 원문을 근거로 현장 문의에 답하고, 근거가 없으면 담당자에게 넘기는 응대 에이전트", "ids": {"video": "15OcEOT1kXe21f2CDv3zsOaY26UKt4pgM", "pamphlet": "1BYiNeb4H22-AhKo_qUWCf0l1o7qWQoyw", "slides": "1cYTiYhV8ToxZ4Cjpow4ji_1paWgZr08a"}}, {"n": 21, "name": "김수민", "dept": "마케팅P", "team": "3조", "title": "지점장 싱글뷰", "summary": "전사 일보를 FC 한 명 단위로 뒤집어, 오늘 누구를 왜 어떻게 만날지 지점장에게 건네는 에이전트", "ids": {"pamphlet": "11hUGV600GaNvEdDhISCRdaPiPhPeaHVq", "video": "1LcaLISTJZGvMx1mj_VkN6pkOSkP3Uhl6", "slides": "14eElacB0FbwQMYsQtSblgcLGvE0GEPVt"}}, {"n": 22, "name": "김지훈", "dept": "상품인프라P", "team": "2조", "title": "상품개발 보조 에이전트", "summary": "상품 문서를 대조해 상품 시스템에 넣을 데이터와 계산 함수 입력 초안을 자동으로 만드는 에이전트", "ids": {"pamphlet": "1Ar057dPQ8PZ9z7xqY6K8etJSYdAXr0M7", "video": "1N10EZkzRFttNBg1jT8QT2ym754yEkrYy", "slides": "1keomEvUuCjPGI9uw97BFbArNbX55cvas"}}];
+const KINDS = [["pamphlet","팜플렛"],["slides","발표자료"],["video","시연영상"]];
+const $ = s => document.querySelector(s);
+const grid = $("#grid"), chips = $("#chips"), q = $("#q"), dlg = $("#dlg");
+let team = "전체";
+
+$("#cnt").textContent = DATA.length;
+$("#ppl").textContent = DATA.reduce((a,d)=>a+d.name.split(",").length,0);
+
+const teams = ["전체", ...[...new Set(DATA.map(d=>d.team).filter(Boolean))].sort(), "기타"];
+teams.forEach(t=>{
+  const b = document.createElement("button");
+  b.className="chip"; b.textContent=t; b.setAttribute("aria-pressed", t===team);
+  b.onclick=()=>{team=t; chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c===b)); render();};
+  chips.appendChild(b);
+});
+
+const esc = s => s.replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function render(){
+  const term = q.value.trim().toLowerCase();
+  const list = DATA.filter(d =>
+    (team==="전체" || (team==="기타" ? !d.team : d.team===team)) &&
+    (!term || [d.name,d.dept,d.title,d.summary].join(" ").toLowerCase().includes(term)));
+  grid.innerHTML = list.length ? list.map(d=>`
+    <button class="card" data-n="${d.n}">
+      <div class="thumb"><img src="thumbs/${d.n}.jpg" alt="${esc(d.title)} 팜플렛 첫 페이지" loading="lazy"></div>
+      <div class="body">
+        <div class="meta">${d.team?`<span class="tag">${d.team}</span>`:""}<span class="tag dept">${esc(d.dept)}</span></div>
+        <h2>${esc(d.title)}</h2>
+        <p>${esc(d.summary)}</p>
+        <div class="who">${esc(d.name)}</div>
+      </div>
+    </button>`).join("") : `<div class="empty">조건에 맞는 결과물이 없어요.</div>`;
+}
+grid.addEventListener("click", e=>{
+  const c = e.target.closest(".card"); if(c) open(DATA.find(d=>d.n==c.dataset.n));
+});
+q.addEventListener("input", render);
+
+function open(d){
+  $("#dlgTitle").textContent = d.title;
+  $("#dlgSub").textContent = `${d.name} · ${d.dept}${d.team?" · "+d.team:""}`;
+  const tabs = $("#tabs"); tabs.innerHTML="";
+  const link = document.createElement("a");
+  link.className="open-link"; link.target="_blank"; link.rel="noopener"; link.textContent="새 창에서 열기 ↗";
+  KINDS.forEach(([k,label],i)=>{
+    const t = document.createElement("button");
+    t.className="tab"; t.role="tab"; t.textContent=label;
+    t.onclick=()=>{
+      tabs.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected", x===t));
+      $("#frame").innerHTML = `<iframe src="https://drive.google.com/file/d/${d.ids[k]}/preview" allow="autoplay; fullscreen" allowfullscreen title="${label}"></iframe>`;
+      link.href = `https://drive.google.com/file/d/${d.ids[k]}/view`;
+    };
+    tabs.appendChild(t);
+    if(i===0) queueMicrotask(()=>t.click());
+  });
+  const sp = document.createElement("span"); sp.className="tab-spacer"; tabs.append(sp, link);
+  dlg.showModal();
+}
+$("#close").onclick = ()=>dlg.close();
+dlg.addEventListener("click", e=>{ if(e.target===dlg) dlg.close(); });
+dlg.addEventListener("close", ()=>{ $("#frame").innerHTML=""; });
+render();
+</script>
+</body>
+</html>
